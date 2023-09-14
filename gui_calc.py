@@ -1,18 +1,69 @@
 import tkinter as tk
 
+def button_0():
+    print("button 0 clicked")
+    add_character_to_display("0")
 
-root = tk.Tk()
+def button_1():
+    print("button 1 clicked")
+    add_character_to_display("1")
 
-display = tk.Entry(root, width=30)
-display.grid(row = 0, column = 0, columnspan=4)
+def button_2():
+    print("button 2 clicked")
+    add_character_to_display("2")
 
+def button_3():
+    print("button 3 clicked")
+    add_character_to_display("3")
 
-global mode
-mode = "none"
-global first_number 
-first_number = 0
+def button_4():
+    print("button 4 clicked")
+    add_character_to_display("4")
 
-display.insert(0, '0')
+def button_5():
+    print("button 5 clicked")
+    add_character_to_display("5")
+
+def button_6():
+    print("button 6 clicked")
+    add_character_to_display("6")
+
+def button_7():
+    print("button 7 clicked")
+    add_character_to_display("7")
+
+def button_8():
+    print("button 8 clicked")
+    add_character_to_display("8")
+
+def button_9():
+    print("button 9 clicked")
+    add_character_to_display("9")
+
+def button_plus():
+    print("button + clicked")
+    do_operator_mode("plus")
+
+def button_minus():
+    print("button - clicked")
+    do_operator_mode("minus")
+
+    
+def button_mutiply():
+    print("button * clicked")
+    do_operator_mode("mutiply")
+    
+def button_divide():
+    print("button / clicked")
+    do_operator_mode("divide")
+
+def button_dot():
+    print("button . clicked")
+    add_character_to_display(".")
+
+def button_equal():
+    print("button = clicked")
+    do_equal_mode() 
 
 def on_enter(e):
     e.widget['background'] = '#fafafa'
@@ -34,14 +85,20 @@ def delete_display():
 
 def add_display(text):
     display.insert(0, text)
-
+    
+def default_display():
+    delete_display()
+    add_display(0)
+    
 def is_string_only_zero(string):
     for idx in string:
         if idx != '0':
             return False
     return True
 
-def add_character_to_dispay(new_number):
+def add_character_to_display(new_number):
+    if(mode == "operator_input"): 
+        return
     current_text = display.get()
     delete_display()
 
@@ -54,137 +111,45 @@ def add_character_to_dispay(new_number):
     else:
         add_display(current_text + new_number)
         
-
-def do_plus_mode():
+def do_operator_mode(input_mode):
     global mode
     global first_number
-    if  mode == "none":
+    if  mode == "number_input" or mode == "operator_input":
         first_number = float(display.get())
-        mode = "plus"
-        delete_display()
+        mode = input_mode
+        default_display()
         
-def do_minus_mode():
-    global mode
-    global first_number
-    if  mode == "none":
-        first_number = float(display.get())
-        mode = "minus"
-        delete_display()
-
-def do_mutiply_mode():
-    global mode
-    global first_number
-    if  mode == "none":
-        first_number = float(display.get())
-        mode = "mutiply"
-        delete_display()
-
-def do_divide_mode():
-    global mode
-    global first_number
-    if  mode == "none":
-        first_number = float(display.get())
-        mode = "divide"
-        delete_display()
-
 def do_equal_mode():
     global mode
     global first_number
+    second_number = float(display.get())
+
     if mode == "plus":
-        second_number = float(display.get())
         result = first_number + second_number
-        delete_display()
-        add_display(str(result))
-        first_number = result
-        mode = "none"
     elif mode == "minus":
-        second_number = float(display.get())
         result = first_number - second_number
-        delete_display()
-        add_display(str(result))
-        first_number = result
-        mode = "none"
     elif mode == "mutiply":
-        second_number = float(display.get())
         result = first_number * second_number
-        delete_display()
-        add_display(str(result))
-        first_number = result
-        mode = "none"
     elif mode == "divide":
-        second_number = float(display.get())
         result = first_number / second_number
-        delete_display()
-        add_display(str(result))
-        first_number = result
-        mode = "none"
-
-
-
-def button_0():
-    print("button 0 clicked")
-    add_character_to_dispay("0")
-
-def button_1():
-    print("button 1 clicked")
-    add_character_to_dispay("1")
-
-def button_2():
-    print("button 2 clicked")
-    add_character_to_dispay("2")
-
-def button_3():
-    print("button 3 clicked")
-    add_character_to_dispay("3")
-
-def button_4():
-    print("button 4 clicked")
-    add_character_to_dispay("4")
-
-def button_5():
-    print("button 5 clicked")
-    add_character_to_dispay("5")
-
-def button_6():
-    print("button 6 clicked")
-    add_character_to_dispay("6")
-
-def button_7():
-    print("button 7 clicked")
-    add_character_to_dispay("7")
-
-def button_8():
-    print("button 8 clicked")
-    add_character_to_dispay("8")
-
-def button_9():
-    print("button 9 clicked")
-    add_character_to_dispay("9")
-
-def button_plus():
-    print("button + clicked")
-    do_plus_mode() 
-
-def button_minus():
-    print("button - clicked")
-    do_minus_mode() 
+        
+    delete_display()
+    add_display(str(result))
+    first_number = result
+    mode = "operator_input"
     
-def button_mutiply():
-    print("button * clicked")
-    do_mutiply_mode()
-    
-def button_divide():
-    print("button / clicked")
-    do_divide_mode()
+root = tk.Tk()
 
-def button_dot():
-    print("button . clicked")
-    add_character_to_dispay(".")
+display = tk.Entry(root, width=30)
+display.grid(row = 0, column = 0, columnspan=4)
 
-def button_equal():
-    print("button = clicked")
-    do_equal_mode() 
 
+global mode
+mode = "number_input"
+global first_number 
+first_number = 0
+
+default_display()
 
 buttons = [
     ('7', 1, 0, button_7), ('8', 1, 1, button_8),   ('9', 1, 2, button_9),     ('/', 1, 3, button_divide),
@@ -194,8 +159,6 @@ buttons = [
 ]
 for button_data in buttons:
     create_button(root, *button_data)
-
-root.mainloop()
 
 root.mainloop()
 
